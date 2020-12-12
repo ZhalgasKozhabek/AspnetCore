@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["AdminTitle"] = "Languages";
+    Layout = "_LayoutAdmin";
+}
+@model Digital.Models.Language
+<div class="wrapper" style="margin-top: 20px; ">
+
+    <div class="row">
+        <div style="padding: 30px;">
+            <form asp-controller="Home" asp-action="UpdateLanguage">
+
+                <div class="form-group ">
+                    <label class="control-label requiredField" for="name">
+                        Language name
+
+                    </label>
+                    <div class="input-group">
+
+                        <input class="form-control" id="name" name="LanguageName" type="text" value="@Model.LanguageName" />
+
+                    </div>
+                    <label class="control-label requiredField" for="name">
+                       Proficiency
+
+                    </label>
+                    <div class="input-group">
+
+                        <input class="form-control" id="name" name="Proficiency" type="text" value="@Model.Proficiency" />
+
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div>
+                        <input type="hidden" name="IDLanguage" value="@Model.IDLanguage" />
+                        <button class="btn btn-primary " name="submit" type="submit">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

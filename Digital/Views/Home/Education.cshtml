@@ -1,0 +1,174 @@
+﻿@{
+    ViewData["AdminTitle"] = "Educations";
+    Layout = "_LayoutAdmin";
+}
+@model IEnumerable<Digital.Models.Education>
+
+<div class="wrapper" style="margin-top: 60px; ">
+
+    <div class="row">
+        <div style="padding: 40px;">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTask">+ ADD Education </button>
+            <!-- The Modal -->
+            <div class="modal fade" id="addTask">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content " style="width: 1000px;">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Adding Education </h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <form asp-controller="Home" asp-action="CreateEducation" method="post">
+                                            <div class="form-group ">
+                                                <label class="control-label requiredField" for="name">
+                                                    University name
+
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input class="form-control" id="name" name="University" type="text" />
+                                                </div>
+                                                <label class="control-label requiredField" for="name">
+                                                    Degree
+
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input class="form-control" id="name" name="Degree" type="text" />
+                                                </div>
+                                                
+                                                <label class="control-label requiredField" for="name">
+                                                    From Year
+
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input class="form-control" id="name" name="FromYear" type="text" />
+                                                </div>
+                                                <label class="control-label requiredField" for="name">
+                                                    To Year
+
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input class="form-control" id="name" name="ToYear" type="text" />
+                                                </div>
+                                              
+                                            </div>
+                                            <div class="form-group">
+                                                <div>
+                                                    <button class="btn btn-primary " name="submit" type="submit">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+
+
+        </div>
+        <div class="col-8 col-m-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>
+                        Education
+                    </h3>
+                </div>
+                <div class="card-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>University name</th>
+                                <th>Degree </th>
+                                <th>From Year</th>
+                                <th>To Year</th>
+                             
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.IDEdu)</td>
+                                <td>@Html.DisplayFor(modelItem => item.University)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Degree)</td>
+                                <td>@Html.DisplayFor(modelItem => item.FromYear)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ToYear)</td>
+
+
+                                <td><a href="/Home/UpdateEducationPage/@item.IDEdu">Update</a> | <a href="" onclick="Delete('@item.IDEdu')">Delete</a></td>
+                            </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- page script -->
+<script>
+    $(function () {
+        $('#example1').DataTable();
+    });
+    function Delete(id){
+        var txt;
+        var r = confirm("Are you sure you want to Delete?");
+        if (r == true) {
+
+            $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("DeleteEducation", "Home")',
+                data: {
+                    id: id
+                },
+                error: function (result) {
+                    alert("error");
+                },
+                success: function (result) {
+                    if (result == true) {
+                        var baseUrl="/Home/Education";
+                        window.location.reload();
+                    }
+                    else {
+                        alert("There is a problem, Try Later!");
+                    }
+                }
+            });
+        }
+    }
+</script>

@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["AdminTitle"] = "Skills";
+    Layout = "_LayoutAdmin";
+}
+@model Digital.Models.Skill
+<div class="wrapper" style="margin-top: 20px; ">
+
+    <div class="row">
+        <div style="padding: 30px;">
+            <form asp-controller="Home" asp-action="UpdateSkill">
+
+                <div class="form-group ">
+                    <label class="control-label requiredField" for="name">
+                        About skill
+
+                    </label>
+                    <div class="input-group">
+
+                        <input class="form-control" id="name" name="SkillName" type="text" value="@Model.SkillName" />
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <input type="hidden" name="IDSkill" value="@Model.IDSkill" />
+                        <button class="btn btn-primary " name="submit" type="submit">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

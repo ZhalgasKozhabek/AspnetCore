@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["AdminTitle"] = "Persons";
+    Layout = "_LayoutAdmin";
+}
+@model Digital.Models.Person
+<div class="wrapper" style="margin-top: 20px; ">
+
+    <div class="row">
+        <div style="padding: 30px;">
+            <form asp-controller="Home" asp-action="UpdateUser">
+
+                <div class="form-group ">
+                    <label class="control-label requiredField" for="name">
+                        First Name
+
+                    </label>
+                    <div class="input-group">
+
+                        <input class="form-control" id="name" name="FirstName" type="text" value="@Model.FirstName" />
+                    </div>
+                    <label class="control-label requiredField" for="name">
+                        Last Name
+
+                    </label>
+                    <div class="input-group">
+
+                        <input class="form-control" id="name" name="LastName" type="text" value="@Model.LastName"/>
+                    </div>
+                    <label class="control-label requiredField" for="name">
+                        Email
+
+                    </label>
+                    <div class="input-group">
+
+                        <input class="form-control" id="name" name="Email" type="text" value="@Model.Email"/>
+                    </div>
+                    <label class="control-label requiredField" for="name">
+                        Password
+
+                    </label>
+                    <div class="input-group">
+
+                        <input class="form-control" id="name" name="Password" type="text" value="@Model.Password"/>
+                    </div>
+                    <label class="control-label requiredField" for="name">
+                        DateOfBirth
+
+                    </label>
+                    <div class="input-group">
+
+                        <input class="form-control" id="name" name="DateOfBirth" type="text" value="@Model.DateOfBirth" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <input type="hidden" name="Id" value="@Model.Id" />
+                        <button class="btn btn-primary " name="submit" type="submit">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

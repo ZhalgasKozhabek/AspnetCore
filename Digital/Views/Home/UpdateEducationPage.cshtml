@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["AdminTitle"] = "Educations";
+    Layout = "_LayoutAdmin";
+}
+@model Digital.Models.Education
+<div class="wrapper" style="margin-top: 20px; ">
+
+    <div class="row">
+        <div style="padding: 30px;">
+            <form asp-controller="Home" asp-action="UpdateEducation">
+
+                <div class="form-group ">
+                    <label class="control-label requiredField" for="name">
+                        University name
+
+                    </label>
+                    <div class="input-group">
+
+                        <input class="form-control" id="name" name="University" type="text" value="@Model.University" />
+                    </div>
+                    <label class="control-label requiredField" for="name">
+                        Degree
+
+                    </label>
+                    <div class="input-group">
+
+                        <input class="form-control" id="name" name="Degree" type="text" value="@Model.Degree"  />
+                    </div>
+
+                    <label class="control-label requiredField" for="name">
+                        From Year
+
+                    </label>
+                    <div class="input-group">
+
+                        <input class="form-control" id="name" name="FromYear" type="text"  value="@Model.FromYear" />
+                    </div>
+                    <label class="control-label requiredField" for="name">
+                        To Year
+
+                    </label>
+                    <div class="input-group">
+
+                        <input class="form-control" id="name" name="ToYear" type="text" value="@Model.ToYear"  />
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div>
+                        <input type="hidden" name="ExperienceID" value="@Model.IDEdu" />
+                        <button class="btn btn-primary " name="submit" type="submit">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

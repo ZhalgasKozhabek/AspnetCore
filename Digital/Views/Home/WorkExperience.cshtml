@@ -1,0 +1,193 @@
+﻿@{
+    ViewData["AdminTitle"] = "WorkExperiences";
+    Layout = "_LayoutAdmin";
+}
+@model IEnumerable<Digital.Models.WorkExperience>
+
+<div class="wrapper" style="margin-top: 60px; ">
+
+    <div class="row">
+        <div style="padding: 40px;">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTask">+ ADD Experiens information </button>
+            <!-- The Modal -->
+            <div class="modal fade" id="addTask">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content " style="width: 1000px;">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Adding Experiences </h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <form asp-controller="Home" asp-action="CreateWorkExperience" method="post">
+                                            <div class="form-group ">
+                                                <label class="control-label requiredField" for="name">
+                                                    Company name
+
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input class="form-control" id="name" name="Company" type="text" />
+                                                </div>
+                                                <label class="control-label requiredField" for="name">
+                                                    Title
+
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input class="form-control" id="name" name="Title" type="text" />
+                                                </div>
+                                                <label class="control-label requiredField" for="name">
+                                                    Country
+
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input class="form-control" id="name" name="Country" type="text" />
+                                                </div>
+                                                <label class="control-label requiredField" for="name">
+                                                    From Year
+
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input class="form-control" id="name" name="FromYear" type="text" />
+                                                </div>
+                                                <label class="control-label requiredField" for="name">
+                                                    To Year
+
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input class="form-control" id="name" name="ToYear" type="text" />
+                                                </div>
+                                                <label class="control-label requiredField" for="name">
+                                                    Description
+
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input class="form-control" id="name" name="Description" type="text" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div>
+                                                    <button class="btn btn-primary " name="submit" type="submit">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+
+
+        </div>
+        <div class="col-8 col-m-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>
+                        Experience
+                    </h3>
+                </div>
+                <div class="card-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Company name</th>
+                                <th>Title</th>
+                                <th>Country</th>
+                                <th>From Year</th>
+                                <th>To Year</th>
+                                <th>Description</th>
+                             
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.ExperienceID)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Company)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Country)</td>
+                                <td>@Html.DisplayFor(modelItem => item.FromYear)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ToYear)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+
+
+
+                                <td><a href="/Home/UpdateWorkExperiencePage/@item.ExperienceID">Update</a> | <a href="" onclick="Delete('@item.ExperienceID')">Delete</a></td>
+                            </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- page script -->
+<script>
+    $(function () {
+        $('#example1').DataTable();
+    });
+    function Delete(id){
+        var txt;
+        var r = confirm("Are you sure you want to Delete?");
+        if (r == true) {
+
+            $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("DeleteWorkExperince", "Home")',
+                data: {
+                    id: id
+                },
+                error: function (result) {
+                    alert("error");
+                },
+                success: function (result) {
+                    if (result == true) {
+                        var baseUrl="/Home/WorkExperience";
+                        window.location.reload();
+                    }
+                    else {
+                        alert("There is a problem, Try Later!");
+                    }
+                }
+            });
+        }
+    }
+</script>

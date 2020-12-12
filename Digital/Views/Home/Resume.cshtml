@@ -1,0 +1,205 @@
+﻿@{
+    ViewData["AdminTitle"] = "Resumes";
+    Layout = "_LayoutAdmin";
+}
+@model IEnumerable<Digital.Models.Resume>
+
+<div class="wrapper" style="margin-top: 60px; ">
+
+    <div class="row">
+        <div style="padding: 30px;">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTask">+ ADD Resume</button>
+            <!-- The Modal -->
+            <div class="modal fade" id="addTask">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content " style="width: 1000px;">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Adding Resume </h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <form asp-controller="Home" asp-action="CreateResume" method="post">
+                                            <div class="form-group ">
+                                                <label class="control-label requiredField" for="name">
+                                                    Address
+
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input class="form-control" id="name" name="Address" type="text" />
+                                                </div>
+                                                <label class="control-label requiredField" for="name">
+                                                    Telephone
+
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input class="form-control" id="name" name="Tel" type="text" />
+                                                </div>
+                                                <label class="control-label requiredField" for="name">
+                                                    Email
+
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input class="form-control" id="name" name="Email" type="text" />
+                                                </div>
+                                                <label class="control-label requiredField" for="name">
+                                                    Social network URL
+
+                                                </label>
+                                                <div class="input-group">
+
+                                                    <input class="form-control" id="name" name="Profile" type="text" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div>
+                                                    <button class="btn btn-primary " name="submit" type="submit">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <script>
+                                                    $("#Address").autocomplete({
+                                                     source: '@Url.Action("GetName","Home")'
+                                                    });
+                                                     $("#Tel").autocomplete({
+                                                     source: '@Url.Action("GetName","Home")'
+                                                     });
+                                                     $("#Email").autocomplete({
+                                                     source: '@Url.Action("GetName","Home")'
+                                                     });
+                                                      $("#Profile").autocomplete({
+                                                     source: '@Url.Action("GetName","Home")'
+                                                     });
+                                            </script>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+
+
+        </div>
+        <div class="col-8 col-m-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>
+                        All Resumes
+                    </h3>
+                </div>
+                <input type="search" id="searchrec" class="search" placeholder="Search" />
+                <div class="card-content">
+                    <table class="table" id="table1">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Address</th>
+                                <th>Telephone</th>
+                                <th>Email</th>
+                                <th>Social network</th>
+
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Tel)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Profile)</td>
+
+                                    <td><a href="/Home/UpdateResumePage/@item.Id">Update</a> | <a href="" onclick="Delete('@item.Id')">Delete</a></td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script src ="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+<script>
+    $(document).ready(function ()
+    {
+        $('.search').on('keyup', function ()
+        {
+            var datasearch = $(this).val().toLowerCase();
+            $('#table1 tr').each(function () {
+                var stringdata = $(this).text().toLowerCase();
+                if (stringdata.indexOf(datasearch) === -1) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            });
+        });
+    });
+</script>
+    <!-- DataTables -->
+    <script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!-- page script -->
+    <script>
+    $(function () {
+        $('#example1').DataTable();
+    });
+    function Delete(id){
+        var txt;
+        var r = confirm("Are you sure you want to Delete?");
+        if (r == true) {
+
+            $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("DeleteResume", "Home")',
+                data: {
+                    id: id
+                },
+                error: function (result) {
+                    alert("error");
+                },
+                success: function (result) {
+                    if (result == true) {
+                        var baseUrl="/Home/Resume";
+                        window.location.reload();
+                    }
+                    else {
+                        alert("There is a problem, Try Later!");
+                    }
+                }
+            });
+        }
+    }
+    </script>
