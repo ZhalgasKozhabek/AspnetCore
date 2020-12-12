@@ -9,7 +9,7 @@ namespace Digital.Utilities.Validations
         string FirstCharToUpper(string input)
         {
             if (String.IsNullOrEmpty(input))
-                throw new ArgumentException("Is empty!");
+                throw new ArgumentException("Is emptyy!");
             return input.First().ToString();
         }
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
